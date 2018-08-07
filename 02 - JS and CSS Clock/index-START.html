@@ -3,19 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
-</head>
-<body>
-
-
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand" data-hour></div>
-        <div class="hand min-hand" data-minute></div>
-        <div class="hand second-hand" data-second></div>
-      </div>
-    </div>
-
-
   <style>
     html {
       background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
@@ -57,23 +44,56 @@
     }
 
     .hand {
-      width:50%;
+      width:100%;
       height:6px;
-      background:black;
+      background:linear-gradient(to right, black 51%, transparent 49%);
       position: absolute;
       top:50%;
+      transition: transform 0.5s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+
     }
 
   </style>
+</head>
+<body>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand" data-hour></div>
+      <div class="hand" data-minute></div>
+      <div class="hand" data-second></div>
+    </div>
+  </div>
 
   <script>
-    const currentDate = Date.now()
     /*
       [1]시침이 현재 시간에 맞게 가르키도록 한다.
+      [1-1]현재 시간의 시침 각도를 계산해 css: rotator 효과를 준다.
       [2]분침이 현재 시간에 맞게 가르키도록 한다.
       [3]초침이 현재 시간에 맞게 가르키도록 한다.
     */
+    let hoursBar = document.querySelector('.hand[data-hour]')
+    let minutesBar = document.querySelector('.hand[data-minute]')
+    let secondsBar = document.querySelector('.hand[data-second]')
 
+    function setDate() {
+      const currentDate = new Date()
+      const defaultDegree = 90
+  
+      let hours = currentDate.getHours()
+      let hoursDegrees = (hours / 12) * 360 + defaultDegree
+      hoursBar.style.transform = `rotate(${hoursDegrees}deg)`
+  
+      let minutes = currentDate.getMinutes()
+      let minutesDegrees = (minutes / 60) * 360 + defaultDegree
+      minutesBar.style.transform = `rotate(${minutesDegrees}deg)`
+  
+      let seconds = currentDate.getSeconds()
+      let secondsDegrees = (seconds / 60) * 360 + defaultDegree
+      secondsBar.style.transform = `rotate(${secondsDegrees}deg)`
+    }
+
+    setInterval(setDate, 1000)
 
   </script>
 </body>
