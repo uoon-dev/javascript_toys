@@ -68,8 +68,9 @@
     
     function handleUpdate() {
       const suffix = this.dataset.sizing || ''
-      // document.documentElement는 root 요소를 얻기 위해 사용한다. 
-      // 그리고 CSS 변수 속성을 바꾸기 위해 setProperty 함수를 사용한다.
+      /* document.documentElement는 root 요소를 얻기 위해 사용한다. 
+         setProperty 함수는 CSS 변수 속성을 바꾸기 위해 사용한다.
+      */
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
     }
 
